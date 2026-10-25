@@ -14,6 +14,7 @@ from typing import Any
 
 import aiosqlite
 from aiogram import BaseMiddleware, Bot, Dispatcher, F
+from aiogram.client.session.aiohttp import AiohttpSession
 from aiogram.filters import Command, CommandStart
 from aiogram.types import (CallbackQuery, InlineKeyboardButton, InlineKeyboardMarkup,
                            LabeledPrice, Message, PreCheckoutQuery)
@@ -24,6 +25,7 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(mess
 log = logging.getLogger("starspin")
 
 TOKEN = os.getenv("BOT_TOKEN", "").strip()
+BOT_PROXY_URL = os.getenv("BOT_PROXY_URL", "").strip()
 ADMIN_IDS = {int(x) for x in os.getenv("ADMIN_IDS", "").replace(" ", "").split(",") if x.isdigit()}
 DB_PATH = Path(os.getenv("DATABASE_PATH", "starspin.sqlite3"))
 CHIPS_PER_STAR = 10
@@ -396,7 +398,7 @@ async def main() -> None:
     if not TOKEN:
         raise RuntimeError("Укажи BOT_TOKEN в файле .env (см. .env.example).")
     await init_db()
-    bot = Bot(TOKEN)
+    bot = Bot(TOKEN, session=AiohttpSession(proxy=BOT_PROXY_URL or None))
     dp = Dispatcher()
     dp.message.outer_middleware(BanMiddleware())
     dp.callback_query.outer_middleware(BanMiddleware())
