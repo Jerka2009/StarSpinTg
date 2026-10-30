@@ -1,0 +1,10 @@
+{
+  "title": "Star spin",
+  "description": "Телеграм бот для азартных игр, ставки принимаются в телеграм звездах, бот полностью рабочий. [Бот отключен]",
+  "images": [
+    "assets/portfolio/screenshot-1.png",
+    "assets/portfolio/screenshot-2.png"
+  ],
+  "demo": "https://t.me/facs_3298_bot",
+  "github": "https://github.com/Jerka2009/StarSpin"
+}
